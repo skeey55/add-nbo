@@ -24,20 +24,51 @@ int main(int argc, char *argv[]) {
 	int b=1;	
 	fd=fopen(argv[1],"rb");
 	fd1=fopen(argv[2], "rb");
-	while((n=fgetc(fd)) != EOF)
+	int littleendian=0;
+	int i;
+	int test = 0x12345678;
+	char* ptr = (char*)&test;
+	if(ptr[0]==120)
 	{
-		if(a==3)
-		{n=n*256;}
-		test4 = test4|n;
-		a++;
+	       	littleendian =1;
+	//	printf("This system is littleendian %d\n", ptr[0]);
 	}
+	if(littleendian== 1){
+		while((n=fgetc(fd)) != EOF)
+		{
+			if(a==3)
+			{n=n*256;}
+			test4 = test4|n;
+			a++;
+		}
 	
-	while((n1=fgetc(fd1)) != EOF)
-	{
-		if(b==3)
-		{n1=n1*256;}
-		test5 = test5|n1;
-		b++;
+		while((n1=fgetc(fd1)) != EOF)
+		{
+			if(b==3)
+			{n1=n1*256;}
+			test5 = test5|n1;
+			b++;
+		}
+	}else{
+		while((n=fgetc(fd)) != EOF)
+		{
+			if(a==1)
+			{n=n/65536;}
+			if(a==2)
+			{n=n/4096;}
+			test4 = test4|n;
+			a++;
+		}
+		while((n1=fgetc(fd1)) != EOF)
+		{
+			if(b==1)
+			{n=n/65536;}
+			if(b==2)
+			{n=n/4096;}
+			test5 = test5|n;
+			b++;
+		}
+
 	}
 	test6 = sum(test4, test5);	
 
