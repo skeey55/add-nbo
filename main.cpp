@@ -53,9 +53,13 @@ int main(int argc, char *argv[]) {
 		while((n=fgetc(fd)) != EOF)
 		{
 			if(a==1)
-			{n=n/65536;}
+			{n=n/65536;
+			 n=n/256;
+			}
 			if(a==2)
-			{n=n/4096;}
+			{n=n/256;
+			 
+			}
 			test4 = test4|n;
 			a++;
 		}
